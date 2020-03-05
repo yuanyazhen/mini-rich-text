@@ -1,0 +1,8 @@
+{
+  "short_name": "mini-rich-text",
+  "name": "mini-rich-text",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
