@@ -1,7 +1,7 @@
-import ExampleComponent from './'
+import MiniRichText from './'
 
-describe('ExampleComponent', () => {
+describe('MiniRichText', () => {
   it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
+    expect(MiniRichText).toBeTruthy()
   })
 })
