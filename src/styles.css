@@ -1,8 +1,99 @@
 /* add css styles here (optional) */
 
-.test {
-  display: inline-block;
-  margin: 2em auto;
-  border: 2px solid #000;
-  font-size: 2em;
+.mini-editor-container {
+  position: relative;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+  width: 300px;
+  height: 300px;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+
+/* 去掉获取焦点时的蓝色边框 */
+.editor-textarea:focus {
+  outline: none;
+}
+
+.editor-textarea {
+  padding: 4px;
+  height: 258px; /* 300-40 */
+  box-sizing: border-box;
+  overflow: scroll;
+}
+
+/* 工具条 */
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  padding-left: 4px;
+  padding-right: 4px;
+  height: 40px;
+  box-sizing: border-box;
+  background-color: #fafafa;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.modal-form {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  left: 50%;
+  margin-top: -1px;
+
+  background-color:#fafafa;
+  width: 80%;
+  max-width: 300px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+
+.modal-form div {
+  margin-bottom: 10px;
+}
+
+.modal-form button {
+  margin-right: 6px;
+}
+
+/* button input  */
+.mini-editor-container button {
+  color: rgba(0, 0, 0, 0.65);
+  height: 32px;
+  padding: 4px 15px;
+  border-radius: 2px;
+  background-color: #fff;
+  border-color: #d9d9d9;
+  cursor: pointer;
+}
+
+.mini-editor-container button:hover {
+  color: #40a9ff;
+  background-color: #fff;
+  border-color: #40a9ff;
+}
+
+.mini-editor-container button:focus {
+  outline: none;
+}
+
+.mini-editor-container input {
+  font-size: 14px;
+  line-height: 1.45px;
+  padding: 4px 6px;
+  color: rgba(0, 0, 0, 0.65);
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+
+.mini-editor-container input:focus {
+  border-color: #40a9ff;
+  border-right-width: 1px !important;
+  outline: 0;
+  -webkit-box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
 }
