@@ -4,8 +4,8 @@
   position: relative;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.65);
-  width: 300px;
-  height: 300px;
+  width: 430px;
+  height: 300px;  /* 当height改变时，editor-textarea 相应变化 */
   border: 1px solid #d9d9d9;
   border-radius: 2px;
 }
@@ -17,7 +17,7 @@
 
 .editor-textarea {
   padding: 4px;
-  height: 258px; /* 300-40 */
+  height: 258px; /* 200-40-2 */
   box-sizing: border-box;
   overflow: scroll;
 }
@@ -36,26 +36,41 @@
 
 .modal-form {
   position: absolute;
-  top: 0;
-  transform: translateX(-50%);
+  top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
   margin-top: -1px;
 
-  background-color:#fafafa;
+  background-color:#fff;
   width: 80%;
   max-width: 300px;
-  padding: 20px;
+  padding: 20px 0 0;
   text-align: center;
   border: 1px solid #d9d9d9;
   border-radius: 2px;
+  font-size: 0;
+}
+
+.modal-form::after {
+  width: 100px;
+  height: 100px;
+  z-index: -1;
+  background-color: #ccc;
+}
+
+.modal-form label {
+  width: 80px;
+  display: inline-block;
+  font-size: 14px;
 }
 
 .modal-form div {
+  background-color: #fff;
   margin-bottom: 10px;
 }
 
-.modal-form button {
-  margin-right: 6px;
+.modal-form button:first-child {
+  margin-right: 16px;
 }
 
 /* button input  */
@@ -70,13 +85,23 @@
 }
 
 .mini-editor-container button:hover {
-  color: #40a9ff;
+  /* #36cfc9 */
+  color: #36cfc9;
   background-color: #fff;
-  border-color: #40a9ff;
+  border-color: #36cfc9;
 }
 
 .mini-editor-container button:focus {
   outline: none;
+}
+
+.mini-editor-container button[disabled] {
+  color: rgba(0, 0, 0, 0.25);
+  background-color: #f5f5f5;
+  border-color: #d9d9d9;
+  text-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
 }
 
 .mini-editor-container input {
@@ -91,7 +116,7 @@
 }
 
 .mini-editor-container input:focus {
-  border-color: #40a9ff;
+  border-color: #36cfc9;
   border-right-width: 1px !important;
   outline: 0;
   -webkit-box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);

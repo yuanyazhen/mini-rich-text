@@ -7,22 +7,29 @@ export default class MiniRichText extends Component {
   static propTypes = {
     style: PropTypes.object,
     defaultValue: PropTypes.string,
-    placeholder: PropTypes.string
+    onChange: PropTypes.func
   }
 
   state = {
-    value: null,
     isAddLink: 'none',
     link: '',
     linkText: ''
   };
 
-  handleChange = e => {
-    console.log('e =>', e)
+  handleInput = e => {
+    // this.setState({
+    //   value: e.target.innerHTML
+    // })
+
+    this.props.onChange(e.target.innerHTML)
   }
 
   handleAddLink = () => {
-    this.setState({ isAddLink: 'block' })
+    this.saveCurrentRange()
+
+    this.setState({
+      isAddLink: 'block'
+    })
   }
 
   handleCancleLink = () => {
@@ -30,9 +37,22 @@ export default class MiniRichText extends Component {
   }
 
   handleConfirmLink = () => {
-    const { link, linkText } = this.state
+    const { link } = this.state
 
-    console.log(link, ' & ', linkText)
+    // const linkStr = `<a href="${link}">${linkText}</a>`
+    // this.setState({
+    //   isAddLink: 'none',
+    //   value: value + linkStr
+    // })
+    // const a = document.getElementById('editor');
+    // a.innerHTML = value + linkStr;
+
+    const selection = window.getSelection ? window.getSelection() : document.getSelection()
+    selection.removeAllRanges()
+    // 从this.range中获得保存的Range设置为Selection的Range对象
+    selection.addRange(this.range)
+
+    document.execCommand('createLink', false, link)
     this.setState({ isAddLink: 'none' })
   }
 
@@ -41,31 +61,58 @@ export default class MiniRichText extends Component {
     this.setState({ [type]: e.target.value })
   }
 
+  saveCurrentRange () {
+    // 获取selection对象
+    const selection = window.getSelection ? window.getSelection() : document.getSelection()
+    if (!selection.rangeCount) {
+      return
+    }
+    // const content = this.$refs.content
+    for (let i = 0; i < selection.rangeCount; i++) {
+      // 从selection中获取第一个Range对象
+      const range = selection.getRangeAt(0)
+      this.range = range
+    }
+  }
+
   render() {
-    const { defaultValue, style } = this.props
+    const { style } = this.props
     const { isAddLink } = this.state
+
+    const maskStyle = {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      height: '100%',
+      width: '100%',
+      background: 'rgba(245, 245, 245, 0.75)'
+    }
 
     return (
       <div className={css['mini-editor-container']} style={style}>
         <div className={css['editor-toolbar']}>
-          <button onClick={this.handleAddLink}>插入链接</button>
+          <button onClick={this.handleAddLink}>Add Link</button>
         </div>
 
         <div
+          id="editor"
           className={css['editor-textarea']}
+          style={{ height: style && style.height }}
           suppressContentEditableWarning="true"
           contentEditable="true"
-          onChange={this.handleChange}
-          style={{ height: style && style.height }}
+          onInput={this.handleInput}
+          dangerouslySetInnerHTML={{ __html: this.props.defaultValue }}
         >
-          {defaultValue}
         </div>
 
+        <div style={{ display: isAddLink, ...maskStyle }}></div>
         <div className={css['modal-form']} style={{ display: isAddLink }}>
-          <div>链接地址：<input onChange={e => this.handleInputChange('link', e)} /></div>
-          <div>链接文本：<input onChange={e => this.handleInputChange('linkText', e)} /></div>
-          <button onClick={this.handleConfirmLink}>确认</button>
-          <button onClick={this.handleCancleLink}>取消</button>
+          <div><label>URL:</label> <input onChange={e => this.handleInputChange('link', e)} /></div>
+          {/* <div><label>TEXT:</label><input onChange={e => this.handleInputChange('linkText', e)} /></div> */}
+          <p style={{ marginTop: '20px', backgroundColor: '#fafafa', padding: '10px' }}>
+            <button onClick={this.handleConfirmLink}>OK</button>
+            <button onClick={this.handleCancleLink}>Cancel</button>
+          </p>
         </div>
       </div>
     )
